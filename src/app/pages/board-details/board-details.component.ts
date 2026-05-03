@@ -1,4 +1,4 @@
-import { Component, input, inject, computed } from '@angular/core';
+import { Component, input, inject, computed, effect } from '@angular/core'; // Added effect
 import { BoardService } from '../../services/board.service';
 import { CommonModule } from '@angular/common';
 
@@ -12,9 +12,15 @@ import { CommonModule } from '@angular/common';
 export class BoardDetailsComponent {
   private boardService = inject(BoardService);
   id = input.required<string>();
+  
+  constructor() {
+    effect(() => {
+      this.boardService.setActiveBoard(this.id());
+    });
+  }
+
   currentBoard = computed(() => this.boardService.getBoardById(this.id()));
 
-  // Helper to determine the dot color class
   getColumnColorClass(name: string): string {
     const status = name.toLowerCase();
     if (status.includes('todo')) return 'todo';

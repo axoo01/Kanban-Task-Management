@@ -8,27 +8,19 @@
     </div>
 
     <div class="nav-links">
-      <p class="nav-label">ALL BOARDS (3)</p>
+      <p class="nav-label">ALL BOARDS ({{ boardService.boards().length }})</p>
       
       <ul class="board-list">
-        <li>
-          <a routerLink="/boards/platform-launch" routerLinkActive="active-link">
-            <img src="/assets/icon-board.svg" alt="" aria-hidden="true">
-            Platform Launch
-          </a>
-        </li>
-        <li>
-          <a routerLink="/boards/marketing-plan" routerLinkActive="active-link">
-            <img src="/assets/icon-board.svg" alt="" aria-hidden="true">
-            Marketing Plan
-          </a>
-        </li>
-        <li>
-          <a routerLink="/boards/roadmap" routerLinkActive="active-link">
-            <img src="/assets/icon-board.svg" alt="" aria-hidden="true">
-            Roadmap
-          </a>
-        </li>
+        @for (board of boardService.boards(); track board.name) {
+          <li>
+            <a [routerLink]="['/boards', board.name.toLowerCase().replace(' ', '-')]" 
+              routerLinkActive="active-link">
+              <img src="/assets/icon-board.svg" alt="" aria-hidden="true">
+              {{ board.name }}
+            </a>
+          </li>
+        }
+        
         <li>
           <button class="btn-create-board">
             <img src="/assets/icon-board.svg" alt="" aria-hidden="true">
@@ -62,7 +54,7 @@
       <div class="header-left">
         <img src="/assets/logo-mobile.svg" alt="Kanban" class="mobile-logo">
         
-        <h1 class="board-title">Platform Launch</h1>
+        <h1 class="board-title">{{ headerTitle() }}</h1>
       </div>
 
       <div class="header-right">
