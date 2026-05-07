@@ -175,21 +175,41 @@
   :host-context(.dark-theme) & {
     background-color: var(--color-dark-grey);
     border-bottom-color: var(--color-lines-dark);
-    .board-title { color: white; }
   }
 
   .header-left {
     display: flex;
     align-items: center;
     gap: 16px;
-    .mobile-logo { display: none; }
-    .board-title { font-size: 24px; margin: 0; font-weight: bold; }
+    height: 100%;
+
+    .board-title {
+      font-size: 24px;
+      margin: 0;
+      font-weight: bold;
+
+      :host-context(.dark-theme) & {
+        color: white;
+      }
+    }
+
+    .chevron-mobile {
+      width: 10px;
+      height: 7px;
+      margin-left: 8px;
+      transition: transform 0.3s ease;
+
+      &.rotate {
+        transform: rotate(180deg);
+      }
+    }
   }
 
   .header-right {
     display: flex;
     align-items: center;
     gap: 24px;
+    height: 100%;
   }
 }
 
@@ -265,16 +285,129 @@
   &:hover { background-color: var(--color-main-purple-hover); }
 }
 
-/* 9. RESPONSIVE QUERIES */
+/* 9. MOBILE DROPDOWN STYLES */
+.mobile-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+}
+
+.mobile-sidebar-content {
+  margin-top: 80px;
+  width: 264px;
+  height: fit-content;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  padding: 16px 0;
+  box-shadow: 0 10px 20px rgba(54, 78, 126, 0.25);
+
+  :host-context(.dark-theme) & {
+    background-color: var(--color-dark-grey);
+  }
+
+  .nav-label {
+    padding: 0 24px;
+    margin-bottom: 20px;
+    color: var(--color-medium-grey);
+    font-size: 12px;
+    letter-spacing: 2.4px;
+    font-weight: bold;
+  }
+
+  .board-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li a,
+    .btn-create-board {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 240px;
+      padding: 14px 0 14px 24px;
+      border-radius: 0 100px 100px 0;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
+      color: var(--color-medium-grey);
+      border: none;
+      background: transparent;
+
+      &.active-link {
+        background-color: var(--color-main-purple) !important;
+        color: white !important;
+
+        img {
+          filter: brightness(0) invert(1) !important;
+        }
+      }
+
+      &:hover:not(.active-link) {
+        background-color: var(--color-light-grey);
+        color: var(--color-main-purple);
+      }
+    }
+  }
+
+  .theme-toggle-mobile {
+    background-color: var(--color-light-grey);
+    margin: 16px 16px 0;
+    height: 48px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+
+    :host-context(.dark-theme) & {
+      background-color: var(--color-very-dark-grey);
+    }
+  }
+}
+
+/* 10. MERGED RESPONSIVE HELPERS */
+.desktop-only {
+  display: flex;
+  align-items: center;
+}
+
+.mobile-only {
+  display: none;
+}
+
 @media (max-width: 768px) {
-  .app-container { grid-template-columns: 1fr; }
-  .sidebar { display: none; }
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: flex !important;
+    align-items: center;
+  }
+
+  .app-container {
+    grid-template-columns: 1fr !important;
+  }
+
+  .sidebar {
+    display: none !important;
+  }
+
   .main-header {
     height: 64px;
     padding: 0 16px;
-    .header-left {
-      .mobile-logo { display: block; }
-      .board-title { font-size: 18px; }
+
+    .header-left .board-title {
+      font-size: 18px;
+    }
+
+    .btn-primary-l {
+      padding: 10px 18px;
+      border-radius: 24px;
     }
   }
 }
